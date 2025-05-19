@@ -34,9 +34,11 @@ with top_col:
         lock_swim = st.checkbox("Lock swim")
         st.caption(f"⏱️ Avg swim time: {time_to_str(current_defaults['swim'])}")
         swim_time = st.slider("Swim time (min)", 5, 120, current_defaults['swim'], disabled=lock_swim)
-        swim_pace = swim_time * 100 / (current_defaults['swim_dist'] * 1000)  # min/100m
+        swim_pace = swim_time * 100 / (current_defaults['swim_dist'] * 1000)  # pace in min/100m
+        pace_min = int(swim_pace)
+        pace_sec = int((swim_pace - pace_min) * 60)
         st.text(f"🏊 {current_defaults['swim_dist']} km")
-        st.text(f"Pace: {swim_pace:.1f} min/100m ({time_to_str(swim_time)})")
+        st.text(f"Pace: {pace_min}:{pace_sec:02d} min/100m ({time_to_str(swim_time)})")
 
     with col2:
         lock_bike = st.checkbox("Lock bike")
