@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 # --- Données par distance (temps moyens estimés en minutes) ---
 distances = {
