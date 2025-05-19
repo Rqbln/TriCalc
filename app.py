@@ -52,9 +52,11 @@ with top_col:
         lock_run = st.checkbox("Lock run")
         st.caption(f"⏱️ Avg run time: {time_to_str(current_defaults['run'])}")
         run_time = st.slider("Run time (min)", 10, 300, current_defaults['run'], disabled=lock_run)
-        run_pace = run_time / current_defaults['run_dist']  # min/km
+        run_pace = run_time / current_defaults['run_dist']  # pace in min/km
+        pace_min = int(run_pace)
+        pace_sec = int((run_pace - pace_min) * 60)
         st.text(f"🏃 {current_defaults['run_dist']} km")
-        st.text(f"Pace: {run_pace:.1f} min/km ({time_to_str(run_time)})")
+        st.text(f"Pace: {pace_min}:{pace_sec:02d} min/km ({time_to_str(run_time)})")
 
     target_time_enabled = st.checkbox("Set a target time")
     if target_time_enabled:
