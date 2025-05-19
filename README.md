@@ -1,5 +1,7 @@
 # TriCalc 🏊🚴🏃
 
+![Preview of TriCalc app](preview.png)
+
 **TriCalc** is a simple, interactive Streamlit app that helps triathletes estimate their total race time across all official triathlon distances — from Super Sprint to full Ironman.
 
 ## 🧠 Features
