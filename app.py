@@ -34,32 +34,42 @@ with top_col:
         lock_swim = st.checkbox("Lock swim")
         st.caption(f"⏱️ Avg swim time: {time_to_str(current_defaults['swim'])}")
         swim_time = st.slider("Swim time (min)", 5, 120, current_defaults['swim'], disabled=lock_swim)
-        swim_pace = swim_time * 100 / (current_defaults['swim_dist'] * 1000)  # pace in min/100m
+        swim_pace = swim_time * 100 / (current_defaults['swim_dist'] * 1000)
         pace_min = int(swim_pace)
         pace_sec = int((swim_pace - pace_min) * 60)
+        swim_pct_diff = ((current_defaults['swim'] - swim_time) / current_defaults['swim']) * 100
         st.text(f"🏊 {current_defaults['swim_dist']} km")
         st.text(f"Pace: {pace_min}:{pace_sec:02d} min/100m ({time_to_str(swim_time)})")
+        st.text(f"{swim_pct_diff:+.1f}% vs avg")
 
     with col2:
         lock_bike = st.checkbox("Lock bike")
         st.caption(f"⏱️ Avg bike time: {time_to_str(current_defaults['bike'])}")
         bike_time = st.slider("Bike time (min)", 10, 420, current_defaults['bike'], disabled=lock_bike)
-        bike_speed = current_defaults['bike_dist'] / (bike_time / 60)  # km/h
+        bike_speed = current_defaults['bike_dist'] / (bike_time / 60)
+        bike_pct_diff = ((current_defaults['bike'] - bike_time) / current_defaults['bike']) * 100
         st.text(f"🚴 {current_defaults['bike_dist']} km")
         st.text(f"Speed: {bike_speed:.1f} km/h ({time_to_str(bike_time)})")
+        st.text(f"{bike_pct_diff:+.1f}% vs avg")
 
     with col3:
         lock_run = st.checkbox("Lock run")
         st.caption(f"⏱️ Avg run time: {time_to_str(current_defaults['run'])}")
         run_time = st.slider("Run time (min)", 10, 300, current_defaults['run'], disabled=lock_run)
-        run_pace = run_time / current_defaults['run_dist']  # min/km
+        run_pace = run_time / current_defaults['run_dist']
+        pace_min = int(run_pace)
+        pace_sec = int((run_pace - pace_min) * 60)
+        run_pct_diff = ((current_defaults['run'] - run_time) / current_defaults['run']) * 100
         st.text(f"🏃 {current_defaults['run_dist']} km")
-        st.text(f"Pace: {run_pace:.1f} min/km ({time_to_str(run_time)})")
+        st.text(f"Pace: {pace_min}:{pace_sec:02d} min/km ({time_to_str(run_time)})")
+        st.text(f"{run_pct_diff:+.1f}% vs avg")
 
     target_time_enabled = st.checkbox("Set a target time")
     if target_time_enabled:
         target_time = st.slider("Target total time (min)", 30, 1000, current_defaults['avg'])
+        target_pct_diff = ((current_defaults['avg'] - target_time) / current_defaults['avg']) * 100
         st.caption(f"🎯 Target: {time_to_str(target_time)}")
+        st.caption(f"{target_pct_diff:+.1f}% vs avg")
     else:
         target_time = None
 
@@ -74,5 +84,3 @@ with result_col:
     if target_time_enabled:
         diff = target_time - total_estimated
         st.metric("Difference from target", f"{diff:+.0f} min")
-
-st.markdown("---")
