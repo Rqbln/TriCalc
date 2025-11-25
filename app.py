@@ -101,7 +101,8 @@ with top_col:
         target_time = None
 
 # Calculate total estimated time (including transitions)
-total_estimated = swim_time + bike_time + run_time + t1_time + t2_time
+transition_time = t1_time + t2_time
+total_estimated = swim_time + bike_time + run_time + transition_time
 total_without_transitions = swim_time + bike_time + run_time
 
 with result_col:
@@ -116,7 +117,7 @@ with result_col:
         delta_color="normal"
     )
     
-    st.caption(f"Disciplines: {time_to_str(total_without_transitions)} + Transitions: {t1_time + t2_time} min")
+    st.caption(f"Disciplines: {time_to_str(total_without_transitions)} + Transitions: {transition_time} min")
     
     st.divider()
     
@@ -136,7 +137,7 @@ with result_col:
     swim_pct = (swim_time / total_estimated) * 100
     bike_pct = (bike_time / total_estimated) * 100
     run_pct = (run_time / total_estimated) * 100
-    trans_pct = ((t1_time + t2_time) / total_estimated) * 100
+    trans_pct = (transition_time / total_estimated) * 100
     
     st.progress(swim_pct / 100, text=f"🏊 Swim: {swim_pct:.0f}%")
     st.progress(bike_pct / 100, text=f"🚴 Bike: {bike_pct:.0f}%")
